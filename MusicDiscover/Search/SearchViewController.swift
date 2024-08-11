@@ -28,19 +28,24 @@ class SearchViewController: UIViewController {
         return collectionView
     }()
     
-    let musicList = Observable.just(["테스트1", "테스트2", "테스트3"])
+    let viewModel = SearchViewModel()
     
     let disposeBag = DisposeBag()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         setupUI()
         bind()
     }
     
     func bind() {
-        musicList
+
+        let input = SearchViewModel.Input(
+            searchText: searchBar.rx.text.orEmpty,
+            searchButtonTap: searchBar.rx.searchButtonClicked)
+        let output = viewModel.transform(input: input)
+        
+        output.musicList
             .bind(to: collectionView.rx.items(cellIdentifier: SearchCollectionViewCell.identifier, cellType: SearchCollectionViewCell.self)) {
                 (row, element, cell) in
                 
@@ -48,11 +53,20 @@ class SearchViewController: UIViewController {
             }
             .disposed(by: disposeBag)
         
+        Observable.zip(
+            collectionView.rx.modelSelected(String.self),
+            collectionView.rx.itemSelected
+        )
+        .map { "검색어는 \($0.0)" }
+        .subscribe(with: self) { owner, value in
+            print(value)
+        }
+        .disposed(by: disposeBag)
+        
         //RxCocoa는 내부적으로 UICollectionView의 delegate와 dataSource를 관리
-        //이를 수동으로 설정하는 경우 충돌이 발생
+        //이를 수동으로 설정하는 경우 충돌이 발생?
         collectionView.rx.setDelegate(self)
             .disposed(by: disposeBag)
-        
     }
     
     func setupUI() {
@@ -63,16 +77,12 @@ class SearchViewController: UIViewController {
         
         navigationItem.titleView = searchBar
         
-//        collectionView.delegate = self
-//        collectionView.dataSource = self
         collectionView.register(SearchCollectionViewCell.self, forCellWithReuseIdentifier: SearchCollectionViewCell.identifier)
         collectionView.snp.makeConstraints { make in
             make.edges.equalTo(view.safeAreaLayoutGuide)
         }
-        
     }
 }
-
 
 extension SearchViewController: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
