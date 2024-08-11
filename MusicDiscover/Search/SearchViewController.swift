@@ -48,8 +48,8 @@ class SearchViewController: UIViewController {
         output.musicList
             .bind(to: collectionView.rx.items(cellIdentifier: SearchCollectionViewCell.identifier, cellType: SearchCollectionViewCell.self)) {
                 (row, element, cell) in
-                
-                cell.musicNameLabel.text = element
+                    
+                cell.musicNameLabel.text = element.artistName
             }
             .disposed(by: disposeBag)
         

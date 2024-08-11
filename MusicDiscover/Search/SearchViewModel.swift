@@ -13,7 +13,7 @@ class SearchViewModel {
     
     let disposeBag = DisposeBag()
     
-    private let musicList = Observable.just(["테스트1", "테스트2", "테스트3", "테스트4", "테스트5", "테스트6", "테이블7"])
+    private let musicListSubject = PublishSubject<[Result]>()
     
     struct Input {
         let searchText: ControlProperty<String> //searchBar.rx.text.orEmpty
@@ -21,14 +21,34 @@ class SearchViewModel {
     }
     
     struct Output {
-        let musicList: Observable<[String]>
+        let musicList: Observable<[Result]>
     }
     
     func transform(input: Input) -> Output {
+        let musicList = PublishSubject<[Result]>()
+        
         input.searchButtonTap
-            .subscribe(with: self) { owner, _ in
-                print("tab")
+            .throttle(.seconds(1), scheduler: MainScheduler.instance)
+            .withLatestFrom(input.searchText)
+            .distinctUntilChanged()
+        //.map { //searchText 문자열 인코딩 처리 로직 작성하기 }
+            .flatMapLatest { value -> Observable<[Result]> in
+                return NetworkManager.shared.callMusic(searchText: value)
+                    .map { result in
+                        return result.results // `Result`를 `[Result]`로 변환
+                    }
+                    .catchAndReturn([]) // 오류 발생 시 빈 배열 반환
             }
+            .subscribe(onNext: { music in
+                print("tab")
+                musicList.onNext(music) // 결과를 PublishSubject에 전달
+            }, onError: { error in
+                print("error \(error)")
+            }, onCompleted: {
+                print("completed")
+            }, onDisposed: {
+                print("disposed")
+            })
             .disposed(by: disposeBag)
         
         input.searchText
@@ -36,8 +56,7 @@ class SearchViewModel {
                 print("viewModel \(value)")
             }
             .disposed(by: disposeBag)
-
-
+        
         return Output(musicList: musicList)
     }
 }

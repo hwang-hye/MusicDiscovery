@@ -49,7 +49,6 @@ class SearchCollectionViewCell: UICollectionViewCell {
             make.top.equalTo(contentView.safeAreaLayoutGuide).offset(20)
             make.width.equalTo(contentView.snp.width).multipliedBy(0.8)
             make.height.equalTo(contentView.snp.width).multipliedBy(0.8)
-            
         }
         
         musicNameLabel.snp.makeConstraints { make in
