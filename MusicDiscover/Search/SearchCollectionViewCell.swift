@@ -11,23 +11,55 @@ import SnapKit
 class SearchCollectionViewCell: UICollectionViewCell {
     static let identifier = "SearchCollectionViewCell"
     
+    let musicCoverImage: UIImageView = {
+        let image = UIImageView()
+        image.contentMode = .scaleAspectFit
+        image.clipsToBounds = true
+        image.backgroundColor = .gray
+        image.layer.cornerRadius = 8
+        return image
+    }()
+    
+    let musicNameLabel: UILabel = {
+        let label = UILabel()
+        label.font = .systemFont(ofSize: 18, weight: .bold)
+        label.textColor = .black
+        label.textAlignment = .center
+        label.text = "musiclabel"
+        return label
+    }()
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
-        contentView.backgroundColor = .random()
+        
+        setupUI()
+        
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-}
-
-extension UIColor {
-    static func random() -> UIColor {
-        return UIColor(red: .random(in: 0...1),
-                       green: .random(in: 0...1),
-                       blue: .random(in: 0...1),
-                       alpha: 1.0)
+    
+    func setupUI() {
+        contentView.backgroundColor = .lightGray
+        
+        contentView.addSubview(musicCoverImage)
+        contentView.addSubview(musicNameLabel)
+        
+        musicCoverImage.snp.makeConstraints { make in
+            make.center.equalToSuperview()
+            make.top.equalTo(contentView.safeAreaLayoutGuide).offset(20)
+            make.width.equalTo(contentView.snp.width).multipliedBy(0.8)
+            make.height.equalTo(contentView.snp.width).multipliedBy(0.8)
+            
+        }
+        
+        musicNameLabel.snp.makeConstraints { make in
+            make.top.equalTo(musicCoverImage.snp.bottom).offset(10)
+            make.horizontalEdges.equalToSuperview()
+        }
     }
 }
+
 
 
