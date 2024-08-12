@@ -13,6 +13,8 @@
 		2796802F2C68BADC00EB58F1 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2796802E2C68BADC00EB58F1 /* NetworkManager.swift */; };
 		279680312C68BE4000EB58F1 /* Music.swift in Sources */ = {isa = PBXBuildFile; fileRef = 279680302C68BE4000EB58F1 /* Music.swift */; };
 		279680332C68BE9500EB58F1 /* APIKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 279680322C68BE9500EB58F1 /* APIKey.swift */; };
+		279680362C69856E00EB58F1 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 279680352C69856E00EB58F1 /* Kingfisher */; };
+		279680382C69866F00EB58F1 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 279680372C69866F00EB58F1 /* DetailViewController.swift */; };
 		279B52962C64C23C004E7C38 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 279B52952C64C23C004E7C38 /* AppDelegate.swift */; };
 		279B52982C64C23C004E7C38 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 279B52972C64C23C004E7C38 /* SceneDelegate.swift */; };
 		279B529F2C64C23D004E7C38 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 279B529E2C64C23D004E7C38 /* Assets.xcassets */; };
@@ -30,6 +32,7 @@
 		2796802E2C68BADC00EB58F1 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		279680302C68BE4000EB58F1 /* Music.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Music.swift; sourceTree = "<group>"; };
 		279680322C68BE9500EB58F1 /* APIKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIKey.swift; sourceTree = "<group>"; };
+		279680372C69866F00EB58F1 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		279B52922C64C23C004E7C38 /* MusicDiscover.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MusicDiscover.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		279B52952C64C23C004E7C38 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		279B52972C64C23C004E7C38 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -44,6 +47,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				279680362C69856E00EB58F1 /* Kingfisher in Frameworks */,
 				27DADED92C64C4C5004DA726 /* SnapKit in Frameworks */,
 				27DADED62C64C4B7004DA726 /* RxSwift in Frameworks */,
 				27DADED42C64C4B7004DA726 /* RxCocoa in Frameworks */,
@@ -89,6 +93,7 @@
 				279B529E2C64C23D004E7C38 /* Assets.xcassets */,
 				279B52A02C64C23D004E7C38 /* LaunchScreen.storyboard */,
 				279B52A32C64C23D004E7C38 /* Info.plist */,
+				279680372C69866F00EB58F1 /* DetailViewController.swift */,
 			);
 			path = MusicDiscover;
 			sourceTree = "<group>";
@@ -132,6 +137,7 @@
 				27DADED32C64C4B7004DA726 /* RxCocoa */,
 				27DADED52C64C4B7004DA726 /* RxSwift */,
 				27DADED82C64C4C5004DA726 /* SnapKit */,
+				279680352C69856E00EB58F1 /* Kingfisher */,
 			);
 			productName = MusicDiscover;
 			productReference = 279B52922C64C23C004E7C38 /* MusicDiscover.app */;
@@ -164,6 +170,7 @@
 			packageReferences = (
 				27DADED22C64C4B7004DA726 /* XCRemoteSwiftPackageReference "RxSwift" */,
 				27DADED72C64C4C5004DA726 /* XCRemoteSwiftPackageReference "SnapKit" */,
+				279680342C69856E00EB58F1 /* XCRemoteSwiftPackageReference "Kingfisher" */,
 			);
 			productRefGroup = 279B52932C64C23C004E7C38 /* Products */;
 			projectDirPath = "";
@@ -192,6 +199,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				279680382C69866F00EB58F1 /* DetailViewController.swift in Sources */,
 				2796802F2C68BADC00EB58F1 /* NetworkManager.swift in Sources */,
 				279B52962C64C23C004E7C38 /* AppDelegate.swift in Sources */,
 				279680332C68BE9500EB58F1 /* APIKey.swift in Sources */,
@@ -426,6 +434,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		279680342C69856E00EB58F1 /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/onevcat/Kingfisher.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 7.12.0;
+			};
+		};
 		27DADED22C64C4B7004DA726 /* XCRemoteSwiftPackageReference "RxSwift" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/ReactiveX/RxSwift.git";
@@ -445,6 +461,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		279680352C69856E00EB58F1 /* Kingfisher */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 279680342C69856E00EB58F1 /* XCRemoteSwiftPackageReference "Kingfisher" */;
+			productName = Kingfisher;
+		};
 		27DADED32C64C4B7004DA726 /* RxCocoa */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 27DADED22C64C4B7004DA726 /* XCRemoteSwiftPackageReference "RxSwift" */;

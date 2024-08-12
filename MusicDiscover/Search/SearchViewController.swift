@@ -10,6 +10,9 @@ import SnapKit
 import RxSwift
 import RxCocoa
 
+
+//현재는 띄어쓰기 없는 단어만 검색가능
+//ex) BTS, Lisa...
 class SearchViewController: UIViewController {
     
     let searchBar: UISearchBar = {
@@ -46,22 +49,37 @@ class SearchViewController: UIViewController {
         let output = viewModel.transform(input: input)
         
         output.musicList
-            .bind(to: collectionView.rx.items(cellIdentifier: SearchCollectionViewCell.identifier, cellType: SearchCollectionViewCell.self)) {
-                (row, element, cell) in
-                    
-                cell.musicNameLabel.text = element.artistName
+            .bind(to: collectionView.rx.items(cellIdentifier: SearchCollectionViewCell.identifier, cellType: SearchCollectionViewCell.self)) { (row, element, cell) in
+                cell.configure(with: element)
             }
             .disposed(by: disposeBag)
         
         Observable.zip(
-            collectionView.rx.modelSelected(String.self),
+            collectionView.rx.modelSelected(Result.self),
             collectionView.rx.itemSelected
         )
-        .map { "검색어는 \($0.0)" }
-        .subscribe(with: self) { owner, value in
-            print(value)
-        }
+        .subscribe(onNext: { [weak self] (result, indexPath) in
+            let detailVC = DetailViewController(result: result)
+            self?.navigationController?.pushViewController(detailVC, animated: true)
+        })
         .disposed(by: disposeBag)
+//        output.musicList
+//            .bind(to: collectionView.rx.items(cellIdentifier: SearchCollectionViewCell.identifier, cellType: SearchCollectionViewCell.self)) {
+//                (row, element, cell) in
+//
+//                cell.musicNameLabel.text = element.artistName
+//            }
+//            .disposed(by: disposeBag)
+        
+//        Observable.zip(
+//            collectionView.rbtsx.modelSelected(String.self),
+//            collectionView.rx.itemSelected
+//        )
+//        .map { "검색어는 \($0.0)" }
+//        .subscribe(with: self) { owner, value in
+//            print(value)
+//        }
+//        .disposed(by: disposeBag)
         
         //RxCocoa는 내부적으로 UICollectionView의 delegate와 dataSource를 관리
         //이를 수동으로 설정하는 경우 충돌이 발생?
